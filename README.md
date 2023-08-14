@@ -9,6 +9,10 @@ Elevator System
 * MONGO DB
 * REDIS
 * KAFKA
+* DOCKER
+* DOCKER-COMPOSE
+
+
 
 
 
