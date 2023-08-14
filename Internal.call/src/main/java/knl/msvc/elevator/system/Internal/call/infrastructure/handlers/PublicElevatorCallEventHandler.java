@@ -37,9 +37,10 @@ public class PublicElevatorCallEventHandler extends ElevatorCallHandler{
         addRequest(elevator, r);
         buildingCached.updatePublicElevator(elevator);
 
-        if (elevator.isOpen())
+        if (!elevator.isOpen())
             elevatorDriver.run(elevator, r, r.getOrigin());
     }
+
     private void addRequest(PublicElevator elevator, Request r) {
 
         if (r.getDirection() == Direction.UP){

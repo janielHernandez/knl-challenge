@@ -1,18 +1,18 @@
 server:
-  port: 5000
+  port: ${PORT:5000}
 
 
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: elevator_calls
-      username: root
-      password: "sasa"
+      host: ${MONGODB_HOST:localhost}
+      port: ${MONGODB_PORT:27017}
+      database: ${MONGODB_DATABASE:elevator_calls}
+      username: ${MONGODB_USERNAME:root}
+      password: ${MONGODB_PASSWORD:sasa}
       authentication-database: admin
   kafka:
     producer:
-      bootstrap-server: localhost:9092
+      bootstrap-server: ${KAFKA_HOST:localhost:9092}
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
