@@ -34,10 +34,10 @@ public class PublicElevatorCallEventHandler extends ElevatorCallHandler{
         r.setDirection(r.getDestination()>r.getOrigin()? Direction.UP: Direction.DOWN);
         r.setHasKeyCard(event.isHasKeyCard());
 
-        addRequest(elevator, r);
-        buildingCached.updatePublicElevator(elevator);
 
-        if (!elevator.isOpen())
+        addRequest(elevator, r);
+
+        if (elevator.getCurrentWeight()==0.0 && elevator.getDirection()==Direction.NONE)
             elevatorDriver.run(elevator, r, r.getOrigin());
     }
 
@@ -50,5 +50,8 @@ public class PublicElevatorCallEventHandler extends ElevatorCallHandler{
             elevator.addRequestTo(r, elevator.getPendingDown());
             logger.info("New Request added to Pending Down List");
         }
+        buildingCached.updatePublicElevator(elevator);
     }
+
+
 }

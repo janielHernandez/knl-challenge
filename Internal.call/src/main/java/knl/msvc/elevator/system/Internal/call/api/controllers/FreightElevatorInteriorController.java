@@ -11,14 +11,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @RestController
-@RequestMapping(path = "/api/v1/elevator/public")
+@RequestMapping(path = "/api/v1/elevator/freight")
 @Validated
-public class PublicElevatorInteriorController extends RaiserErrorController {
-    private final Logger logger = Logger.getLogger(PublicElevatorInteriorController.class.getName());
+public class FreightElevatorInteriorController extends RaiserErrorController {
+    private final Logger logger = Logger.getLogger(FreightElevatorInteriorController.class.getName());
 
 
     @Autowired

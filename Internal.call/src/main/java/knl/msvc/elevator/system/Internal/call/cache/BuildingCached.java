@@ -27,12 +27,12 @@ public class BuildingCached {
 
     public PublicElevator getPublicElevator(){
         return gsonConverter
-                .fromJson(
-                        (String) redisTemplate
-                                .opsForValue()
-                                .get(ElevatorCachedKey.PUBLIC),
-                        PublicElevator.class
-                );
+                    .fromJson(
+                            (String) redisTemplate
+                                    .opsForValue()
+                                    .get(ElevatorCachedKey.PUBLIC),
+                            PublicElevator.class
+                    );
     }
 
     public FreightElevator getFreightElevator(){
@@ -47,8 +47,8 @@ public class BuildingCached {
 
 
     public void updatePublicElevator(PublicElevator elevator){
-        redisTemplate.opsForValue().set(ElevatorCachedKey.PUBLIC,
-                gsonConverter.toJson(elevator));
+            redisTemplate.opsForValue().set(ElevatorCachedKey.PUBLIC,
+                    gsonConverter.toJson(elevator));
     }
 
     public void updateFreightElevator(FreightElevator elevator){

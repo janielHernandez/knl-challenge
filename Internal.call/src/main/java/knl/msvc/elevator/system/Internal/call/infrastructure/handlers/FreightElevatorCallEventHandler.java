@@ -5,7 +5,6 @@ import com.elevator.system.common.events.FreightElevatorCallEvent;
 import knl.msvc.elevator.system.Internal.call.cache.BuildingCached;
 import knl.msvc.elevator.system.Internal.call.domains.*;
 import knl.msvc.elevator.system.Internal.call.infrastructure.drivers.FreightElevatorDriver;
-import knl.msvc.elevator.system.Internal.call.infrastructure.drivers.PublicElevatorDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,17 +26,18 @@ public class FreightElevatorCallEventHandler extends ElevatorCallHandler {
 
         logger.info("External Request received " + event.toString());
 
-        PublicElevator elevator = buildingCached.getPublicElevator();
+        FreightElevator elevator = buildingCached.getFreightElevator();
 
         Request r = mapExternalEventToRequest(event);
 
         addRequest(elevator, r);
-        buildingCached.updatePublicElevator(elevator);
+        buildingCached.updateFreightElevator(elevator);
 
-        elevatorDriver.run(elevator);
+        if (elevator.getCurrentWeight()==0.0)
+            elevatorDriver.run(elevator, r, r.getOrigin());
     }
 
-    private void addRequest(PublicElevator elevator, Request r) {
+    private void addRequest(FreightElevator elevator, Request r) {
 
         if (r.getDirection() == Direction.UP){
             elevator.addRequestTo(r, elevator.getPendingUP());

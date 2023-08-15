@@ -29,7 +29,6 @@ public abstract class Elevator {
     }
 
     public boolean anyPendingRequest(int source, TreeSet<RequestWrapper> pending){
-
         var existPending = pending.stream().anyMatch(req->req.getSourceFloor()==source);
         log.info("Value -> " + existPending + " for list -> " + pending +" and source " + source);
         return existPending;
@@ -37,7 +36,7 @@ public abstract class Elevator {
 
 
     //delete completed request
-    public void cleanCompletedCarriage(Request request) {
+    public void cleanCompletedUPCarriage(Request request) {
 
         if (!this.pendingUP.isEmpty()) {
             var wrapper = getRequestFrom(request.getOrigin(), this.pendingUP);
@@ -45,16 +44,20 @@ public abstract class Elevator {
                 removeRequestAndWeight(wrapper.get());
                 removeWrapperFromPendingTree(wrapper.get(), this.pendingUP);
             }
-        } else if (!this.pendingDown.isEmpty()){
-            if (!this.pendingDown.isEmpty()) {
-                var wrapper = getRequestFrom(request.getOrigin(), this.pendingDown);
-                if(wrapper.isPresent()){
-                    removeRequestAndWeight(wrapper.get());
-                    removeWrapperFromPendingTree(wrapper.get(), this.pendingDown);
-                }
+        }
+    }
+
+    public void cleanCompletedDownCarriage(Request request) {
+
+        if (!this.pendingDown.isEmpty()){
+            var wrapper = getRequestFrom(request.getOrigin(), this.pendingDown);
+            if(wrapper.isPresent()){
+                removeRequestAndWeight(wrapper.get());
+                removeWrapperFromPendingTree(wrapper.get(), this.pendingDown);
             }
         }
     }
+
 
     private void removeWrapperFromPendingTree(RequestWrapper wrapper, TreeSet<RequestWrapper> pending) {
         if (wrapper.getRequests().isEmpty())
@@ -83,7 +86,7 @@ public abstract class Elevator {
         setAlarmRinging(false);
     }
 
-    public void addRequestTo(Request r, TreeSet<RequestWrapper> pending) {
+    public  void addRequestTo(Request r, TreeSet<RequestWrapper> pending) {
         boolean requestedBefore = requestedBefore(r.getOrigin(), pending);
 
         if (!requestedBefore){

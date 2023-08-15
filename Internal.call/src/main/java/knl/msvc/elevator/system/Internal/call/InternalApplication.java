@@ -13,7 +13,6 @@ public class InternalApplication {
 	private BuildingCached buildingCached;
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(InternalApplication.class, args);
 	}
 
